@@ -30,7 +30,7 @@ public class DesignTacoController {
                 new Ingredient("CARN", "Carnitas", Ingredient.Type.PROTEIN));
         Ingredient.Type[] types = Ingredient.Type.values();
         for (Ingredient.Type type : types) {
-            model.addAttribute(type.toString().toLowerCase(),filterByType(ingredients, type));
+            model.addAttribute(type.toString().toLowerCase(),filterByType(ingredients,type));
         }
         model.addAttribute("design", new Taco());
         return "design";
