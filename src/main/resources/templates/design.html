@@ -12,20 +12,20 @@
 
 <form method="post" th:object="${design}">
     <h3>Designate your wrap:</h3>
-    <div th:each="ingredient : ${wrap}">
+    <div th:each="ingredients : ${wrap}">
         <label>
-            <input name="ingredient" type="checkbox" th:value="${ingredient.id}"/>
+            <input type="checkbox"  name="ingredients" th:value="${ingredients.name}"/>
         </label>
-        <span th:text="${ingredient.name}">INGREDIENT</span>
-    </div>
+        <span th:text="${ingredients.name}">INGREDIENT</span>
+   </div>
     <h3>Pick your protein:</h3>
-    <div th:each="ingredient : ${protein}">
+    <div th:each="ingredients : ${protein}">
         <label>
-            <input name="ingredient" type="checkbox" th:value="${ingredient.id}"/>
+            <input name="ingredients" type="checkbox" th:value="${ingredients.name}"/>
         </label>
-        <span th:text="${ingredient.name}">INGREDIENT</span><br/>
+        <span th:text="${ingredients.name}">INGREDIENT</span><br/>
     </div>
-    <div>
+  <div>
         <h3>Name your taco creation:</h3>
         <input type="text" th:field="*{name}"/>
         <br/>
