@@ -17,11 +17,13 @@ import java.util.List;
 @Repository
 public class JdbcTacoRepository implements TacoRepository {
     private JdbcTemplate jdbc;
+
+
     public JdbcTacoRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
     @Override
-    public Taco save(Taco taco) {
+    public Taco save(Taco taco) throws SQLException {
         long tacoId = saveTacoInfo(taco);
         taco.setId(tacoId);
         for (String ingredient : taco.getIngredients()) {
@@ -34,23 +36,23 @@ public class JdbcTacoRepository implements TacoRepository {
             jdbc.update("insert into Taco_Ingredients (id,ingredient) values (?,?)",tacoId,ingredient);
     }
 
-    private long saveTacoInfo(Taco taco) {
+    private long saveTacoInfo(Taco taco) throws SQLException {
         taco.setCreatedAt(new Date());
-//        PreparedStatementCreator psc =
-//                new PreparedStatementCreatorFactory("insert into Taco (name, createdAt) values (?, ?)",
-//                        Types.VARCHAR, Types.TIMESTAMP).newPreparedStatementCreator(
-//                        Arrays.asList(taco.getName(), new Timestamp(taco.getCreatedAt().getTime())));
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        long key = jdbc.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("insert into Taco (name, createdAt) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
+        String url = "jdbc:mysql://localhost:3306/taco";
+        String user = "root";
+        String password = "abcd123s";
+        Connection con = DriverManager.getConnection(url, user, password);
+
+                PreparedStatement ps = con.prepareStatement("insert into Taco (name, createdAt) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
+
                 ps.setString(1,taco.getName());
                 ps.setTimestamp(2,new Timestamp(taco.getCreatedAt().getTime()));
-                return ps;
-            }
-        },keyHolder);
+                ps.execute();
+                ResultSet rs = ps.getGeneratedKeys();
+        int idValue = 0;
+                if (rs.next()) {
+                   idValue = rs.getInt(1);}
+                   return idValue;
 
-        return key;
     }
 }
