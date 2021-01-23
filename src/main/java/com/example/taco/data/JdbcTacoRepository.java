@@ -25,13 +25,13 @@ public class JdbcTacoRepository implements TacoRepository {
         long tacoId = saveTacoInfo(taco);
         taco.setId(tacoId);
         for (String ingredient : taco.getIngredients()) {
-            saveIngredientToTaco(ingredient, tacoId);
+            saveIngredientToTaco(ingredient);
         }
         return taco;
     }
 
-    private void saveIngredientToTaco(String ingredient, long tacoId) {
-            jdbc.update("insert into Taco_Ingredients (id, ingredient) values (?, ?)", tacoId, ingredient);
+    private void saveIngredientToTaco(String ingredient) {
+            jdbc.update("insert into Taco_Ingredients (ingredient) values ( ?)", ingredient);
     }
 
     private long saveTacoInfo(Taco taco) {
