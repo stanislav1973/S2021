@@ -3,6 +3,8 @@ package com.example.taco;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Data
 @RequiredArgsConstructor
 public class Ingredient {
@@ -12,4 +14,5 @@ public class Ingredient {
     public  enum Type {
         WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
     }
+
 }

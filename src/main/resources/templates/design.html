@@ -14,21 +14,23 @@
     <h3>Designate your wrap:</h3>
     <div th:each="ingredients : ${wrap}">
         <label>
-            <input type="checkbox"  name="ingredients" th:value="${ingredients.name}"/>
+            <input type="checkbox"  name="ingredients" th:value="${ingredients.id}"/>
         </label>
         <span th:text="${ingredients.name}">INGREDIENT</span>
    </div>
     <h3>Pick your protein:</h3>
     <div th:each="ingredients : ${protein}">
         <label>
-            <input name="ingredients" type="checkbox" th:value="${ingredients.name}"/>
+            <input type="checkbox" name="ingredients" th:value="${ingredients.id}"/>
         </label>
         <span th:text="${ingredients.name}">INGREDIENT</span><br/>
     </div>
   <div>
         <h3>Name your taco creation:</h3>
-        <input type="text" th:field="*{name}"/>
-        <br/>
+      <label>
+          <input type="text" th:field="*{name}"/>
+      </label>
+      <br/>
         <button>Submit your taco</button>
     </div>
 </form>
