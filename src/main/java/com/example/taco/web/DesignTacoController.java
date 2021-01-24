@@ -15,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +46,7 @@ public class DesignTacoController {
         return "design";
     }
     @PostMapping
-    public String processDesign(@Valid Taco design,Errors errors,@ModelAttribute Order order){
+    public String processDesign(@Valid Taco design,Errors errors,@ModelAttribute Order order) throws SQLException {
         if (errors.hasErrors()) {
             return "design";
         }
