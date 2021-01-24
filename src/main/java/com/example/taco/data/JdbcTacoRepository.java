@@ -24,7 +24,7 @@ public class JdbcTacoRepository implements TacoRepository {
     }
 
     @Override
-    public Taco save(Taco taco) throws SQLException {
+    public Taco save(Taco taco){
         Number tacoId = saveTacoInfo(taco);
         taco.setId(tacoId);
         for (String ingredient : taco.getIngredients()) {
