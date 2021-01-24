@@ -22,37 +22,32 @@ public class JdbcTacoRepository implements TacoRepository {
     public JdbcTacoRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
+
     @Override
     public Taco save(Taco taco) throws SQLException {
-        long tacoId = saveTacoInfo(taco);
+        Number tacoId = saveTacoInfo(taco);
         taco.setId(tacoId);
         for (String ingredient : taco.getIngredients()) {
-            saveIngredientToTaco(ingredient,tacoId);
+            saveIngredientToTaco(ingredient, tacoId);
         }
         return taco;
     }
 
-    private void saveIngredientToTaco(String ingredient,long tacoId) {
-            jdbc.update("insert into Taco_Ingredients (id,ingredient) values (?,?)",tacoId,ingredient);
+    private void saveIngredientToTaco(String ingredient, Number tacoId) {
+        jdbc.update("insert into Taco_Ingredients (id,ingredient) values (?,?)", tacoId, ingredient);
     }
 
-    private long saveTacoInfo(Taco taco) throws SQLException {
+    private Number saveTacoInfo(Taco taco){
         taco.setCreatedAt(new Date());
-        String url = "jdbc:mysql://localhost:3306/taco";
-        String user = "root";
-        String password = "abcd123s";
-        Connection con = DriverManager.getConnection(url, user, password);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbc.update(con -> {
+            PreparedStatement ps = con.prepareStatement("insert into Taco (name, createdAt) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
 
-                PreparedStatement ps = con.prepareStatement("insert into Taco (name, createdAt) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, taco.getName());
+            ps.setTimestamp(2, new Timestamp(taco.getCreatedAt().getTime()));
+            return ps;
 
-                ps.setString(1,taco.getName());
-                ps.setTimestamp(2,new Timestamp(taco.getCreatedAt().getTime()));
-                ps.execute();
-                ResultSet rs = ps.getGeneratedKeys();
-        int idValue = 0;
-                if (rs.next()) {
-                   idValue = rs.getInt(1);}
-                   return idValue;
-
+        }, keyHolder);
+        return keyHolder.getKey();
     }
 }
