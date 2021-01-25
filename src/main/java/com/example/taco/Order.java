@@ -9,12 +9,12 @@ import java.util.List;
 @Data
 public class Order{
     private Long id;
-    private String name;
+    private String names;
     private String street;
     private Date createdAt;
     private List<Taco> tacos = new ArrayList<>();
     public void addDesign(Taco design) {
-
+        this.tacos.add(design);
     }
 //    private String city;
 //    private String stage;

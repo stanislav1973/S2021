@@ -9,17 +9,16 @@
 <body>
 <form method="post" th:action="@{/orders}" th:object="${order}">
     <h1>Order your Taco creations!</h1>
-    <a th:href="@{/design}" id="another">Design another taco</a><br/>
-    <h3>Deliver my taco masterpieces to...</h3>
-    <label for="another">Name: </label>
-    <label>
-        <input type="text" th:field="*{name}"/>
-    </label>
+    <a th:href="@{/design}" id="another">Design another taco</a>
     <br/>
-    <label for="another">Street address: </label>
-    <label>
+    <h3>Deliver my taco masterpieces to...</h3>
+
+    <label>Name: </label>
+    <input type="text" th:field="*{names}"/>
+
+    <br/>
+    <label>Street address: </label>
         <input type="text" th:field="*{street}"/>
-    </label>
     <br/>
     <input type="submit" value="Submit order"/>
 </form>
