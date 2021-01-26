@@ -9,9 +9,9 @@ import java.util.List;
 @Data
 public class Order{
     private Long id;
-    private String names;
-    private String street;
-    private Date createdAt;
+    private String dName;
+    private String dStreet;
+    private Date placeAt;
     private List<Taco> tacos = new ArrayList<>();
     public void addDesign(Taco design) {
         this.tacos.add(design);

@@ -2,6 +2,7 @@ package com.example.taco.data;
 
 import com.example.taco.Ingredient;
 import com.example.taco.Taco;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
@@ -18,7 +19,6 @@ import java.util.List;
 public class JdbcTacoRepository implements TacoRepository {
     private JdbcTemplate jdbc;
 
-
     public JdbcTacoRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
@@ -34,17 +34,17 @@ public class JdbcTacoRepository implements TacoRepository {
     }
 
     private void saveIngredientToTaco(String ingredient, Number tacoId) {
-        jdbc.update("insert into Taco_Ingredients (id,ingredient) values (?,?)", tacoId, ingredient);
+        jdbc.update("insert into Taco_Ingredients (taco,ingredient) values (?,?)", tacoId, ingredient);
     }
 
     private Number saveTacoInfo(Taco taco){
-        taco.setCreatedAt(new Date());
+        taco.setCreateAt(new Date());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(con -> {
-            PreparedStatement ps = con.prepareStatement("insert into Taco (name, createdAt) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = con.prepareStatement("insert into Taco (name,createAt) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, taco.getName());
-            ps.setTimestamp(2, new Timestamp(taco.getCreatedAt().getTime()));
+            ps.setTimestamp(2, new Timestamp(taco.getCreateAt().getTime()));
             return ps;
 
         }, keyHolder);

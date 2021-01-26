@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class Taco {
     private Number id;
-    private Date createdAt;
+    private Date createAt;
     private String name;
     private List<String> ingredients;
 }
