@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 @RequiredArgsConstructor
+
 public class Ingredient {
     private final String id;
     private final String name;

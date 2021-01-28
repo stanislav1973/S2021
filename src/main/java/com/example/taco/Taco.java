@@ -9,5 +9,5 @@ public class Taco {
     private Number id;
     private Date createAt;
     private String name;
-    private List<String> ingredients;
+    private List<Ingredient> ingredients;
 }
