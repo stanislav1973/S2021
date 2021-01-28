@@ -24,16 +24,18 @@ public class JdbcTacoRepository implements TacoRepository {
     }
 
     @Override
-    public Taco save(Taco taco){
+    public Taco save(List<String> save,String name){
+        Taco taco = new Taco();
+        taco.setName(name);
         Number tacoId = saveTacoInfo(taco);
         taco.setId(tacoId);
-        for (String ingredient : taco.getIngredients()) {
-            saveIngredientToTaco(ingredient, tacoId);
+        for (String s : save) {
+            saveIngredientToTaco(s, tacoId);
         }
         return taco;
     }
 
-    private void saveIngredientToTaco(String ingredient, Number tacoId) {
+    private void saveIngredientToTaco( String ingredient, Number tacoId) {
         jdbc.update("insert into Taco_Ingredients (taco,ingredient) values (?,?)", tacoId, ingredient);
     }
 
