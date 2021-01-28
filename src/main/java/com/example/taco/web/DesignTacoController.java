@@ -45,12 +45,14 @@ public class DesignTacoController {
         return "design";
     }
     @PostMapping
-    public String processDesign(@Valid Taco design,Errors errors,@ModelAttribute Order order) throws SQLException {
-        if (errors.hasErrors()) {
-            return "design";
-        }
-        Taco saved = designRepo.save(design);
+    public String processDesign(@Valid @RequestParam(name = "ingredients") List<String> design ,@ModelAttribute Order order,@RequestParam(name = "name") String name) throws SQLException {
+//        if (errors.hasErrors()) {
+//            return "design";
+//        }
+       Taco saved = designRepo.save(design,name);
+
         order.addDesign(saved);
+        log.info("Tacos" + design);
         return "redirect:/orders/current";
     }
     @ModelAttribute(name = "order")
