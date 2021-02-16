@@ -19,8 +19,8 @@ public class JdbcOrderRepository implements OrderRepository {
     private ObjectMapper objectMapper;
     @Autowired
     public JdbcOrderRepository(JdbcTemplate jdbc) {
-        this.orderInsert = new SimpleJdbcInsert(jdbc).withTableName("Taco_Order").usingGeneratedKeyColumns("id");
-        this.orderTacoInsert = new SimpleJdbcInsert(jdbc).withTableName("Taco_Order_Tacos");
+        this.orderInsert = new SimpleJdbcInsert(jdbc).withTableName("taco_order").usingGeneratedKeyColumns("id");
+        this.orderTacoInsert = new SimpleJdbcInsert(jdbc).withTableName("taco_order_tacos");
         this.objectMapper = new ObjectMapper();
     }
 

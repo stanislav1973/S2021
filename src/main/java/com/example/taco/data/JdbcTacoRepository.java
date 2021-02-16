@@ -36,14 +36,14 @@ public class JdbcTacoRepository implements TacoRepository {
     }
 
     private void saveIngredientToTaco( String ingredient, Number tacoId) {
-        jdbc.update("insert into Taco_Ingredients (taco,ingredient) values (?,?)", tacoId, ingredient);
+        jdbc.update("insert into taco_ingredients (taco_id,ingredients_id) values (?,?)", tacoId, ingredient);
     }
 
     private Number saveTacoInfo(Taco taco){
         taco.setCreateAt(new Date());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(con -> {
-            PreparedStatement ps = con.prepareStatement("insert into Taco (name,createAt) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = con.prepareStatement("insert into taco (name,createAt) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, taco.getName());
             ps.setTimestamp(2, new Timestamp(taco.getCreateAt().getTime()));
